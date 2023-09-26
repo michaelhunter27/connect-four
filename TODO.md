@@ -1,9 +1,9 @@
 # TODO LIST
 
-- [ ] Outline basic class structures
-  - [ ] Board class
-  - [ ] Game class
-  - [ ] Player class
+- [X] Outline basic class structures
+  - [X] Board class
+  - [X] Game class
+  - [X] Player class
 - [ ] Implement Board class
 - [ ] Implement Human Player class
 - [ ] Implement Game class

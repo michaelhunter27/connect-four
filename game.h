@@ -10,16 +10,21 @@ using namespace std;
 
 class Game{
     private:
-        Board b;
-        Player* players;
+        Board game_board;
+        Player** players;
         int turn;
 
     public:
         Game();
         ~Game();
-        void set_player(int);//????
         void play_game();
+
+        int get_player_type();
+        void set_player_types();
+        void set_symbols(char, char);
+        
         void print_game();
+        void print_results();
 
 };
 

@@ -163,3 +163,8 @@ void Board::print_board(){
         cout << endl;
     }
 }
+
+
+int Board::get_cell(int row, int col){
+    return grid[row][col];
+}

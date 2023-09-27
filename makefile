@@ -8,3 +8,6 @@ connect-four: ${OBJS} ${HEADERS}
 
 ${OBJS}: ${SRCS}
 	${CXX} -c $(@:.o=.cpp)
+
+clean: ${OBJS}
+	rm ${OBJS}

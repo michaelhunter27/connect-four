@@ -4,10 +4,11 @@
   - [X] Board class
   - [X] Game class
   - [X] Player class
-- [ ] Implement Board class
-- [ ] Implement Human Player class
-- [ ] Implement Game class
-- [ ] Version 1.0 - human vs. human game
+- [X] Implement Board class
+- [X] Implement Human Player class
+- [X] Implement Game class
+- [X] Version 1.0 - human vs. human game
+- [ ] debugging
 - [ ] Implement AI Player classes
   - [ ] Random AI (picks a random valid move)
   - [ ] Easy AI (one move look ahead)

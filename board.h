@@ -23,6 +23,7 @@ class Board{
         void copy_board_from(Board);
         void copy_board_to(Board *);
         void print_board();
+        int get_cell(int, int);
 
 
 };

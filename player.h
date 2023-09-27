@@ -45,8 +45,7 @@ class Human_Player: public Player{
         string player_type = "human";
 
     public:
-        Human_Player();
-
+        Human_Player(int);
         ~Human_Player();
 
         //Gets a move from the user
@@ -55,6 +54,15 @@ class Human_Player: public Player{
 
 };
 
+class Random_AI_Player: public Player{
+    private:
+        string player_type = "random AI";
 
+    public:
+        Random_AI_Player(int);
+        ~Random_AI_Player();
+
+        int get_move(Board *);
+};
 
 #endif

@@ -29,33 +29,26 @@ Game::~Game(){
 }
 
 void Game::play_game(){
-
-    
     set_player_types();
-
-    set_symbols('X', 'O');
-
+    set_symbols('X', 'O');  
     
-    print_game();
     turn = 1;
 
     //game loop
     while (game_board.game_over() == 0){
-        
-        
-        //get move
-        int move_col = players[turn%2]->get_move(&game_board);
-        
-        //add move to game board
-        game_board.play_move(players[turn%2]->get_number(), move_col);
-        
-
         //print board
         print_game();
         
+        //get move
+        int move_col = players[(turn-1)%2]->get_move(&game_board);
+        
+        //add move to game board
+        game_board.play_move(players[(turn-1)%2]->get_number(), move_col);
+        
+        
         turn++;
     }
-    
+    print_game();
     print_results();
         
 }
@@ -83,17 +76,18 @@ int Game::get_player_type(){
 //
 void Game::set_player_types(){
     for (int p = 1; p <= 2; p++){
+        system("clear");
+        cout << "Player " << p << ": ";
         int player_selection = get_player_type();
 
         //human player
         if (player_selection == 1){
-            players[p-1] = new Human_Player;
-            players[p-1]->set_number(p);
+            players[p-1] = new Human_Player(p);
         }
 
         //AI random
         if (player_selection == 2){
-            //AI random
+            players[p-1] = new Random_AI_Player(p);
         }
 
         //etc.

@@ -8,9 +8,9 @@
 - [X] Implement Human Player class
 - [X] Implement Game class
 - [X] Version 1.0 - human vs. human game
-- [ ] debugging
+- [X] debugging
 - [ ] Implement AI Player classes
-  - [ ] Random AI (picks a random valid move)
+  - [x] Random AI (picks a random valid move)
   - [ ] Easy AI (one move look ahead)
   - [ ] Medium AI (monte carlo)
   - [ ] Hard AI (monte carlo with look ahead)

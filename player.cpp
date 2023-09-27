@@ -14,21 +14,18 @@ human vs AI, different AI strengths).
 
 using namespace std;
 
-Player::Player(){
 
-}
-Player::~Player(){
-    
-}
+Player::Player(){}
+Player::~Player(){}
 
 
+//Human_Player class implementation
 //class for playing the game as a human inputing moves via command line.
-
-Human_Player::Human_Player(){
+Human_Player::Human_Player(int p){
+    set_number(p);
 }
 
-Human_Player::~Human_Player(){
-}
+Human_Player::~Human_Player(){}
 
 // Gets a move from the user
 // Returns the column of the move as an int 0-6
@@ -48,4 +45,23 @@ int Human_Player::get_move(Board *b){
         }
     }
     return 0;
+}
+
+
+//Random_AI_Player class implementation
+Random_AI_Player::Random_AI_Player(int p){
+    set_number(p);
+}
+Random_AI_Player::~Random_AI_Player(){}
+
+int Random_AI_Player::get_move(Board *b){
+    clock_t t = clock();
+    srand(time(NULL));
+    int rand_col;
+    do{
+        rand_col = rand() % 7;
+    } while (b->valid_column(rand_col) == 0);
+    cout << "Player " << get_number() << " is thinking." << endl;
+    while (clock() - t < 1000){}
+    return rand_col;
 }

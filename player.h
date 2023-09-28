@@ -8,10 +8,11 @@
 
 using namespace std;
 
+//abstract class prototype for a player of a game of connect four
 class Player{
     private:
         int player_number;
-        string player_type;
+        string player_name;
         char symbol;
 
     public:
@@ -37,6 +38,14 @@ class Player{
             return symbol;
         }
 
+        string get_player_name(){
+            return player_name;
+        }
+
+        void set_player_name(string name){
+            player_name = name;
+        }
+
 };
 
 //class for playing the game as a human inputing moves via command line.
@@ -54,9 +63,10 @@ class Human_Player: public Player{
 
 };
 
+//class for a simple AI that chooses random moves
 class Random_AI_Player: public Player{
     private:
-        string player_type = "random AI";
+        string player_name = "Random AI";
 
     public:
         Random_AI_Player(int);
@@ -65,4 +75,15 @@ class Random_AI_Player: public Player{
         int get_move(Board *);
 };
 
+//class for an AI that looks for winning moves
+class Easy_AI_Player: public Player{
+    private:
+        string player_name = "Easy AI";
+
+    public:
+        Easy_AI_Player(int);
+        ~Easy_AI_Player();
+
+        int get_move(Board *);
+};
 #endif

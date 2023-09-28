@@ -143,8 +143,14 @@ void Board::play_move(int player_value, int col){
 }
 
 
-void Board::copy_board_from(Board){
-
+//copies the position of the argument Board into the calling object
+void Board::copy_board_from(Board b){
+    for (int r = 0; r < 6; r++){
+        for (int c = 0; c < 7; c++){
+            grid[r][c] = b.get_cell(r, c);
+        }
+    }
+    num_moves = b.get_num_moves();
 }
 
 
@@ -165,6 +171,13 @@ void Board::print_board(){
 }
 
 
+//returns the value of the cell at (row, col)
 int Board::get_cell(int row, int col){
     return grid[row][col];
+}
+
+
+//returns the number of moves played on the board
+int Board::get_num_moves(){
+    return num_moves;
 }

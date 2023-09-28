@@ -51,17 +51,65 @@ int Human_Player::get_move(Board *b){
 //Random_AI_Player class implementation
 Random_AI_Player::Random_AI_Player(int p){
     set_number(p);
+    set_player_name("Random AI");
 }
 Random_AI_Player::~Random_AI_Player(){}
 
+//Random AI chooses a random valid move
+//returns the column number of the move (0-6)
 int Random_AI_Player::get_move(Board *b){
-    clock_t t = clock();
     srand(time(NULL));
     int rand_col;
     do{
         rand_col = rand() % 7;
     } while (b->valid_column(rand_col) == 0);
-    cout << "Player " << get_number() << " is thinking." << endl;
-    while (clock() - t < 1000){}
     return rand_col;
+}
+
+
+//Easy_AI_Player class implementation
+Easy_AI_Player::Easy_AI_Player(int p){
+    set_number(p);
+    set_player_name("Easy AI");
+}
+Easy_AI_Player::~Easy_AI_Player(){}
+
+
+//Easy AI looks for a winning move and selects that if possible.  If there is no winning move,
+//it looks next to see if its opponent has a winning move, and will select that.
+//If neither exist, it selects a random valid move.
+int Easy_AI_Player::get_move(Board *b){
+    Board new_board;
+    new_board.copy_board_from(*b);
+
+    //look for winning move
+    for(int i = 0; i < 7; i++){
+        if (new_board.valid_column(i)){
+            Board temp_board;
+            temp_board.copy_board_from(new_board);
+            temp_board.play_move(get_number(), i);
+            if (temp_board.game_over() == get_number()){
+                return i;
+            }
+        }
+    }
+
+    //note: Player and opponent numbers are assumed to be 1 and 2
+    int opponent_num = (get_number() % 2) + 1;
+    
+    //look for opponent winning move
+    for (int i = 0; i < 7; i++){
+        if (new_board.valid_column(i)){
+            Board temp_board;
+            temp_board.copy_board_from(new_board);
+            temp_board.play_move(opponent_num, i);
+            if (temp_board.game_over() == opponent_num){
+                return i;
+            }
+        }
+    }
+
+    //if no move has been found, returns a random valid move
+    Random_AI_Player R(get_number());
+    return R.get_move(b);
 }

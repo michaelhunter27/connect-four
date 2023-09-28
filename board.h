@@ -19,11 +19,12 @@ class Board{
         ~Board();
         int game_over();
         int valid_column(int);
-        void play_move(int, int);
+        void play_move(int player_value, int col);
         void copy_board_from(Board);
         void copy_board_to(Board *);
         void print_board();
         int get_cell(int, int);
+        int get_num_moves();
 
 
 };

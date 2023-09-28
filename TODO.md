@@ -11,6 +11,6 @@
 - [X] debugging
 - [ ] Implement AI Player classes
   - [x] Random AI (picks a random valid move)
-  - [ ] Easy AI (one move look ahead)
+  - [X] Easy AI (one move look ahead)
   - [ ] Medium AI (monte carlo)
   - [ ] Hard AI (monte carlo with look ahead)

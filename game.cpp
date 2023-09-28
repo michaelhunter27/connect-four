@@ -16,6 +16,7 @@ Game::Game(){
 }
 
 
+//cleans up allocated memory
 Game::~Game(){
     if (players != NULL){
         if(players[0] != NULL){
@@ -28,6 +29,8 @@ Game::~Game(){
     }
 }
 
+
+//After the user selects players for the game, a game of connect four is played
 void Game::play_game(){
     set_player_types();
     set_symbols('X', 'O');  
@@ -39,19 +42,26 @@ void Game::play_game(){
         //print board
         print_game();
         
+        time_t t = clock();
+        if (players[(turn-1)%2]->get_player_name().find("AI") != string::npos){
+            cout << players[(turn-1)%2]->get_player_name() << " is thinking." << endl;
+        }
+
         //get move
         int move_col = players[(turn-1)%2]->get_move(&game_board);
         
+        //timer to ensure that the AI takes at least one second before playing
+        while (clock() - t < 1000){}
+
         //add move to game board
         game_board.play_move(players[(turn-1)%2]->get_number(), move_col);
-        
-        
+          
         turn++;
     }
     print_game();
-    print_results();
-        
+    print_results();  
 }
+
 
 //promts the user to select a type of player
 //returns a number 1-5 representing that choice
@@ -73,7 +83,8 @@ int Game::get_player_type(){
 }
 
 
-//
+//allows the user to select who will play as Player 1 and Player 2
+//instantiates Player objects for those players
 void Game::set_player_types(){
     for (int p = 1; p <= 2; p++){
         system("clear");
@@ -83,26 +94,34 @@ void Game::set_player_types(){
         //human player
         if (player_selection == 1){
             players[p-1] = new Human_Player(p);
+            cout << "Name: ";
+            string name;
+            cin >> name;
+            players[p-1]->set_player_name(name);
         }
 
-        //AI random
+        //random AI
         if (player_selection == 2){
             players[p-1] = new Random_AI_Player(p);
         }
 
-        //etc.
+        //Easy AI
+        if (player_selection == 3){
+            players[p-1] = new Easy_AI_Player(p);
+        }
 
     }
 }
 
 
+//sets the symbols that will be displayed on the board for each player
 void Game::set_symbols(char c1, char c2){
     players[0]->set_symbol(c1);
     players[1]->set_symbol(c2);
 }
 
 
-
+//prints the board to the terminal
 void Game::print_game(){
     system("clear");
     for (int r = 0; r < 6; r++){
@@ -127,18 +146,18 @@ void Game::print_game(){
 }
 
 
-
+//prints the results of a completed game (i.e., who won, or if it was a tie)
 void Game::print_results(){
     int result = game_board.game_over();
     if (result == -1){
         cout << "It's a tie!" << endl;
     }
     if (result == players[0]->get_number()){
-        cout << "Player " << players[0]->get_number();
+        cout << players[0]->get_player_name();
         cout << " (" << players[0]->get_symbol() << ")" << " wins!";
     }
     if (result == players[1]->get_number()){
-        cout << "Player " << players[1]->get_number();
+        cout << players[1]->get_player_name();
         cout << " (" << players[1]->get_symbol() << ")" << " wins!";
     }
 }

@@ -19,13 +19,19 @@ Game::Game(){
 //cleans up allocated memory
 Game::~Game(){
     if (players != NULL){
+        delete [] players;
+    }
+}
+
+
+void Game::clean_up_game(){
+    if (players != NULL){
         if(players[0] != NULL){
             delete players[0];
         }
         if(players[1] != NULL){
             delete players[1];
         }
-        delete [] players;
     }
 }
 
@@ -60,6 +66,7 @@ void Game::play_game(){
     }
     print_game();
     print_results();  
+    clean_up_game();
 }
 
 
@@ -108,6 +115,11 @@ void Game::set_player_types(){
         //Easy AI
         if (player_selection == 3){
             players[p-1] = new Easy_AI_Player(p);
+        }
+
+        //Medium AI
+        if (player_selection == 4){
+            players[p-1] = new Medium_AI_Player(p);
         }
 
     }
@@ -160,4 +172,42 @@ void Game::print_results(){
         cout << players[1]->get_player_name();
         cout << " (" << players[1]->get_symbol() << ")" << " wins!";
     }
+}
+
+//p1 opponent, p2 ai
+int Game::simulate_game(Player *opponent_player, Player *current_player, Board* b){
+    game_board.copy_board_from(*b);
+    players[0] = opponent_player;
+    players[1] = current_player;
+
+
+    if(players[0]->get_number() == 1){
+        set_symbols('X', 'O');
+    }
+    else{
+        set_symbols('O', 'X');
+    }
+    
+    
+    //turn = game_board.get_num_moves() + 1;
+    turn = 1;
+
+    //game loop
+    while (game_board.game_over() == 0){
+
+        time_t t = clock();
+        
+        
+        //get move
+        int move_col = players[(turn-1)%2]->get_move(&game_board);
+        
+
+        //add move to game board
+        game_board.play_move(players[(turn-1)%2]->get_number(), move_col);
+
+        turn++;
+    }
+
+    return game_board.game_over();
+
 }

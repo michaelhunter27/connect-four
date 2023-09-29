@@ -17,7 +17,9 @@ class Game{
     public:
         Game();
         ~Game();
+        void clean_up_game();
         void play_game();
+
 
         int get_player_type();
         void set_player_types();
@@ -25,6 +27,8 @@ class Game{
         
         void print_game();
         void print_results();
+
+        int simulate_game(Player*, Player*, Board*);
 
 };
 

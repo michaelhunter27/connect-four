@@ -86,4 +86,18 @@ class Easy_AI_Player: public Player{
 
         int get_move(Board *);
 };
+
+
+
+//class for an AI that uses random monte carlo game simulations to choose its moves
+class Medium_AI_Player: public Player{
+    private:
+        string player_name = "Medium AI";
+
+    public:
+        Medium_AI_Player(int);
+        ~Medium_AI_Player();
+
+        int get_move(Board *);
+};
 #endif

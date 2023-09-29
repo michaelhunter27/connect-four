@@ -4,7 +4,7 @@ OBJS =  board.o player.o game.o connect-four.o
 HEADERS = board.h player.h game.h
 
 connect-four: ${OBJS} ${HEADERS}
-	${CXX} ${OBJS} -o connect-four -municode
+	${CXX} ${OBJS} -o connect-four -municode -g
 
 ${OBJS}: ${SRCS}
 	${CXX} -c $(@:.o=.cpp)

@@ -12,5 +12,5 @@
 - [ ] Implement AI Player classes
   - [x] Random AI (picks a random valid move)
   - [X] Easy AI (one move look ahead)
-  - [ ] Medium AI (monte carlo)
+  - [X] Medium AI (monte carlo)
   - [ ] Hard AI (monte carlo with look ahead)

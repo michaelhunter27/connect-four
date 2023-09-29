@@ -11,6 +11,7 @@ human vs AI, different AI strengths).
 
 #include "player.h"
 #include "board.h"
+#include "game.h"
 
 using namespace std;
 
@@ -58,7 +59,6 @@ Random_AI_Player::~Random_AI_Player(){}
 //Random AI chooses a random valid move
 //returns the column number of the move (0-6)
 int Random_AI_Player::get_move(Board *b){
-    srand(time(NULL));
     int rand_col;
     do{
         rand_col = rand() % 7;
@@ -112,4 +112,50 @@ int Easy_AI_Player::get_move(Board *b){
     //if no move has been found, returns a random valid move
     Random_AI_Player R(get_number());
     return R.get_move(b);
+}
+
+
+//Medium AI class implementation
+Medium_AI_Player::Medium_AI_Player(int p){
+    set_number(p);
+    set_player_name("Medium AI");
+}
+
+Medium_AI_Player::~Medium_AI_Player(){}
+
+
+//Medium AI simulates random games to see which move has the best chance of winning
+int Medium_AI_Player::get_move(Board *b){
+    int best_move = -1;
+    int best_move_performance = -1;
+    int result = -1;
+    int move_performance;
+    Board new_board;
+    
+    Game new_game;
+
+    for (int i = 0; i < 7; i++){
+        new_board.copy_board_from(*b);
+        if (new_board.valid_column(i) == 1){
+            new_board.play_move(get_number(), i);
+            move_performance = 0;
+            Random_AI_Player current_player(get_number());
+            Random_AI_Player opponent_player((get_number()%2)+1);
+            for(int n = 0; n < 20; n++){ 
+                result = new_game.simulate_game(&opponent_player, &current_player, &new_board);
+                if (result == get_number()){
+                    move_performance += 5;
+                }
+                if (result == -1){
+                    move_performance += 1;
+                }
+            }
+        
+            if (move_performance > best_move_performance){
+                best_move = i;
+                best_move_performance = move_performance;
+            }
+        }
+    }
+    return best_move;
 }
